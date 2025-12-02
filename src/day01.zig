@@ -24,13 +24,11 @@ pub fn main() !void {
         const first_letters = trimmed_line[0];
         var number = try parseInt(i32, trimmed_line[1..], 10);
 
-        print("first_letters: {}\n", .{first_letters});
-        print("number {}\n", .{number});
-
         // edge case number can be bigger than 100
         if (number > 100) {
             const div = @divTrunc(number, 100);
             number = number - div * 100;
+            count += div;
         }
 
         if (index == 0) {
@@ -41,23 +39,34 @@ pub fn main() !void {
             }
         } else {
             if (first_letters == 76) {
+                if (sum == 0) {
+                    sum = 100;
+                }
                 sum -= number;
             } else {
+                if (sum == 100) {
+                    sum = 0;
+                }
                 sum += number;
             }
         }
+        print("-----index: {}----\n", .{index});
 
         if (sum == 100 or sum == 0) {
             count += 1;
+            print("click 0 \n", .{});
         } else if (sum < 0) {
+            count += 1;
+            print("clickminus \n", .{});
             sum = sum + 100;
-        } else if (sum > 100) {
+        } else if (sum > 99) {
             sum = sum - 100;
+            count += 1;
+            print("click \n", .{});
         }
-
-        index += 1;
-        print("-----index: {}----\n", .{index});
+        print("number {}\n", .{number});
         print("sum: {}\n", .{sum});
+        index += 1;
     }
     print("count: {}\n", .{count});
 }
