@@ -9,6 +9,47 @@ const print = std.debug.print;
 const data = @embedFile("data/day03.txt");
 
 pub fn main() !void {
+    // try part1();
+    var count: usize = 0;
+    var lins = splitAny(u8, data, ",\n");
+    while (lins.next()) |line| {
+        const trimmed_line = trim(u8, line, " ");
+        if (trimmed_line.len == 0) continue;
+        var buffer: [12]u8 = undefined;
+        var last12list = std.ArrayListUnmanaged(u8).initBuffer(&buffer);
+
+        const starting_point: usize = trimmed_line.len - 12;
+        for (0..12) |c| {
+            const ch: u8 = trimmed_line[starting_point + c];
+            last12list.appendAssumeCapacity(ch);
+        }
+
+        var it = std.mem.reverseIterator(trimmed_line[0..starting_point]);
+        while (it.next()) |j| {
+            var num = j; // ;
+            for (last12list.items, 0..) |item, i| {
+                const num2 = item;
+                if (num >= num2) {
+                    const old_num = item;
+                    last12list.items[i] = num;
+                    num = old_num;
+                } else {
+                    break;
+                }
+            }
+        }
+
+        print("last12numbers: {s}\n", .{last12list.items});
+        var result: u64 = 0;
+        for (last12list.items) |item| {
+            result = result * 10 + item - '0';
+        }
+        count += result;
+    }
+    print("count: {d} \n", .{count});
+}
+
+fn part1() !void {
     var count: usize = 0;
     var lins = splitAny(u8, data, ",\n");
     while (lins.next()) |line| {
