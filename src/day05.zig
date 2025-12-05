@@ -75,6 +75,7 @@ pub fn main() !void {
                 current = result[j];
             }
         }
+
         result2[write_idx] = current;
         write_idx += 1;
         break :blk .{
