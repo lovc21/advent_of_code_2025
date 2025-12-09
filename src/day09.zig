@@ -54,24 +54,15 @@ pub fn main() !void {
         var local_area: f64 = 0;
         for (0..rows, 0..) |index_of_row, second_index| {
             if (row_index == second_index) continue; // skip self
-            const third_point_x = numbers_matrix[index_of_row][0];
-            const third_point_y = row[1];
             const x1 = @as(f64, @floatFromInt(row[0]));
             const y1 = @as(f64, @floatFromInt(row[1]));
             const x2 = @as(f64, @floatFromInt(numbers_matrix[index_of_row][0]));
             const y2 = @as(f64, @floatFromInt(numbers_matrix[index_of_row][1]));
-            const x3 = @as(f64, @floatFromInt(third_point_x));
-            const y3 = @as(f64, @floatFromInt(third_point_y));
 
-            const dx = x2 - x1;
-            const dy = y2 - y1;
-            const dx2 = x3 - x1;
-            const dy2 = y3 - y1;
+            const width = @abs(x2 - x1) + 1.0;
+            const height = @abs(y2 - y1) + 1.0;
 
-            const length = sqrt(dx * dx + dx2 * dx2);
-            const widht = sqrt(dy * dy + dy2 * dy2);
-
-            local_area = length * widht;
+            local_area = width * height;
             if (local_area > global_area) {
                 global_area = local_area;
                 point_x = row[0];
