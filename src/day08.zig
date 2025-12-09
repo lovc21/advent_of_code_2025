@@ -148,10 +148,7 @@ pub fn main() !void {
         }
         std.debug.print("\n", .{});
     }
-
-    // Euclidean distance
 }
-
 // Useful stdlib functions
 const sqrt = std.math.sqrt;
 const pow = std.math.pow;
